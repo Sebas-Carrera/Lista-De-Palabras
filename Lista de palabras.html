@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" id="texto">
+	<button onclick="Agregar(texto.value); Mostar();">Agregar</button>
+	<button onclick="Borrar(texto.value); Mostar();">Borrar</button>
+	<ul id="lista">
+	</ul>
+	<script type="text/javascript">
+
+		class Nodo
+		{
+			constructor()
+			{
+				this.Valor = "";
+				this.Sig = null;
+			}
+		}
+
+		var N = null;
+
+		function Agregar(valor)
+		{
+			var A = N;
+			var Nod = new Nodo();
+			Nod.Valor = valor;
+
+			if(A == null)
+				N = Nod;
+			else
+			{
+				while(A.Sig != null)
+					A = A.Sig;
+				A.Sig = Nod;
+			}
+		}
+
+		function Buscar(valor)
+		{
+			var A = N;
+			if(A != null)
+			{
+				while(A != null)
+				{
+					if(A.Valor == valor)
+						return A;
+					A = A.Sig;
+				}
+			}
+			return null;
+		}
+
+		function Borrar(valor)
+		{
+			var A = N;
+
+			if(A != null)
+			{
+				var del = Buscar(valor);
+				if(del != null)
+				{
+					if(del.Sig != null)
+					{
+						var tmp = del.Sig;
+						del.Sig = null;
+						while(A.Sig != null)
+							A = A.Sig;
+
+						A.Valor = tmp.Valor;
+						A.Sig = tmp.Sig;
+					}
+					else
+					{
+						if(A.Sig == null)
+							N = null;
+						else
+						{
+							while(A.Sig.Sig != null)
+								A = A.Sig;
+							A.Sig = null;
+						}
+					}
+				}
+			}
+		}
+
+		function Mostar()
+		{
+			var A = N;
+			document.getElementById("lista").innerHTML = "";
+			while(A != null)
+			{
+				document.getElementById("lista").innerHTML += "<li>" + A.Valor + "</li>";
+				A = A.Sig;
+			}
+		}
+
+	</script>
+</body>
+</html>
+By:Sebastian carrera
